@@ -7,13 +7,4 @@ public class SimpleTask extends Task {
         super(id, name, description, status);
     }
 
-    @Override
-    public String toString() {
-        return "SimpleTask{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

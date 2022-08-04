@@ -15,14 +15,4 @@ public class SubTask  extends Task {
         this.epicId = colId;
     }
 
-    @Override
-    public String toString() {
-        return "SubTask{" +
-                "epicId=" + epicId +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }
