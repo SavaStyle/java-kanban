@@ -1,5 +1,6 @@
 package tasks;
-public class SubTask  extends Task {
+
+public class SubTask extends Task {
     private int epicId;
 
     public SubTask(int id, String name, String description, Status status, int epicId) {
@@ -14,5 +15,4 @@ public class SubTask  extends Task {
     public void setEpicId(int colId) {
         this.epicId = colId;
     }
-
 }

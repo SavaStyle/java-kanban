@@ -1,67 +1,59 @@
 package manager;
 
-import java.util.HashMap;
-import java.util.List;
-
-import tasks.*;
+import tasks.Epic;
+import tasks.SimpleTask;
+import tasks.SubTask;
+import java.util.Map;
 
 public interface TaskManager {
 
-    public int getNextId();
+    int getNextId();
 
     // Получение списка всех задач
-    public HashMap printSimpleTask() ;
+    Map printSimpleTask();
 
-    public HashMap printEpicTask();
+    Map printEpicTask();
 
-    public HashMap printSubTasks();
+    Map printSubTasks();
 
     // Удаление всех задач
-    public void cleanSimpleTask();
+    void cleanSimpleTask();
 
-    public void cleanEpicTask();
+    void cleanEpicTask();
 
-    public void cleanSubTask();
+    void cleanSubTask();
 
     // Получение задач по ID
-    public SimpleTask getSimpleTaskById(int id);
+    SimpleTask getSimpleTaskById(int id);
 
-    public Epic getEpicById(int id);
+    Epic getEpicById(int id);
 
-    public SubTask getSubTaskById(int id);
+    SubTask getSubTaskById(int id);
 
     // создание задач
-    public void addST(SimpleTask task);
+    void addST(SimpleTask task);
 
-    public void addET(Epic task);
+    void addET(Epic task);
 
-    public void addSET(SubTask task);
+    void addSET(SubTask task);
 
     // обновление задач
-    public void updateSimpleTask(SimpleTask task);
+    void updateSimpleTask(SimpleTask task);
 
-    public void updateEpicTask(Epic task);
+    void updateEpicTask(Epic task);
 
-    public void updateSubTask(SubTask task);
+    void updateSubTask(SubTask task);
 
     // Удаление задач по ID
-    public void deleteSimpleTaskById(int id);
+    void deleteSimpleTaskById(int id);
 
-    public void deleteSubTaskById(int id);
+    void deleteSubTaskById(int id);
 
-    public void deleteEpicById(int id);
+    void deleteEpicById(int id);
 
     // Получение списка подзадач эпика
-    public Object getListSubTasks(int id);
+    Object getListSubTasks(int id);
 
     // обновление статуса эпика
-    public void updateEpicStatus(Epic task);
-
-   // public List<Task> getHistory();
-
-
-
+    void updateEpicStatus(Epic task);
 }
-
-
-

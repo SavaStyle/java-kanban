@@ -31,7 +31,6 @@ public abstract class Task {
         this.status = status;
     }
 
-
     public int getId() {
         return id;
     }
@@ -55,5 +54,4 @@ public abstract class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
