@@ -12,11 +12,11 @@ public interface TaskManager {
     int getNextId();
 
     // Получение списка всех задач
-    Map printSimpleTask();
+    Map<Integer, SimpleTask> printSimpleTask();
 
-    Map printEpicTask();
+    Map<Integer, Epic> printEpicTask();
 
-    Map printSubTasks();
+    Map<Integer, SubTask> printSubTasks();
 
     // Удаление всех задач
     void cleanSimpleTask();
