@@ -12,7 +12,6 @@ public class Main {
         System.out.println("Поехали!");
         InMemoryTaskManager manager = new InMemoryTaskManager();
         InMemoryHistoryManager managerHistory = new InMemoryHistoryManager();
-
         testCreation(manager, managerHistory);
     }
 
@@ -91,8 +90,6 @@ public class Main {
         //История
         System.out.println("история");
         managerHistory.getHistory();
-
-
     }
 }
 

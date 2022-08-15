@@ -3,6 +3,8 @@ package manager;
 import tasks.Epic;
 import tasks.SimpleTask;
 import tasks.SubTask;
+
+import java.util.List;
 import java.util.Map;
 
 public interface TaskManager {
@@ -52,7 +54,7 @@ public interface TaskManager {
     void deleteEpicById(int id);
 
     // Получение списка подзадач эпика
-    Object getListSubTasks(int id);
+    List<Integer> getListSubTasks(int id);
 
     // обновление статуса эпика
     void updateEpicStatus(Epic task);

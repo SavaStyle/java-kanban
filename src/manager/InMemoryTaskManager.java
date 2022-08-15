@@ -2,6 +2,7 @@ package manager;
 
 import tasks.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -18,19 +19,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     // Получение списка всех задач
     @Override
-    public Map printSimpleTask() {
+    public Map<Integer, SimpleTask> printSimpleTask() {
         System.out.println(simpleTasks);
         return simpleTasks;
     }
 
     @Override
-    public Map printEpicTask() {
+    public Map<Integer, Epic> printEpicTask() {
         System.out.println(epicks);
         return epicks;
     }
 
     @Override
-    public Map printSubTasks() {
+    public Map<Integer, SubTask> printSubTasks() {
         System.out.println(subTasks);
         return subTasks;
     }
@@ -137,7 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     // Получение списка подзадач эпика
     @Override
-    public Object getListSubTasks(int id) {
+    public List<Integer> getListSubTasks(int id) {
         Epic epic = epicks.get(id);
         return epic.getSubTaskId();
     }
