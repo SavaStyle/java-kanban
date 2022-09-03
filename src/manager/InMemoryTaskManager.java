@@ -1,16 +1,17 @@
 package manager;
 
 import tasks.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int nextId = 1;
     private final Map<Integer, SimpleTask> simpleTasks = new HashMap<>();
     private final Map<Integer, SubTask> subTasks = new HashMap<>();
     private final Map<Integer, Epic> epicks = new HashMap<>();
     private final InMemoryHistoryManager managerHistory = new InMemoryHistoryManager();
+    private int nextId = 1;
 
     @Override
     public int getNextId() {
@@ -77,20 +78,16 @@ public class InMemoryTaskManager implements TaskManager {
     // создание задач
     @Override
     public void addST(SimpleTask task) {
-        // task.setId(nextId++);
         simpleTasks.put(task.getId(), task);
     }
 
     @Override
     public void addET(Epic task) {
-        //  task.setId(nextId++);
-        // updateEpicStatus(task);
         epicks.put(task.getId(), task);
     }
 
     @Override
     public void addSET(SubTask task) {
-        // task.setId(nextId++);
         subTasks.put(task.getId(), task);
     }
 
@@ -115,6 +112,7 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаление задач по ID
     @Override
     public void deleteSimpleTaskById(int id) {
+        managerHistory.remove(id);
         simpleTasks.remove(id);
     }
 
@@ -123,6 +121,7 @@ public class InMemoryTaskManager implements TaskManager {
         SubTask task = subTasks.get(id);
         Epic epic = epicks.get(task.getEpicId());
         subTasks.remove(id);
+        managerHistory.remove(id);
         epic.getSubTaskId().remove(id - 1);
         updateEpicStatus(epic);
     }
@@ -132,7 +131,9 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicks.get(id);
         for (Integer subTaskId : epic.getSubTaskId()) {
             subTasks.remove(subTaskId);
+            managerHistory.remove(subTaskId);
         }
+        managerHistory.remove(id);
         epicks.remove(id);
     }
 
@@ -172,5 +173,9 @@ public class InMemoryTaskManager implements TaskManager {
                 task.setStatus(Status.IN_PROGRESS);
             }
         }
+    }
+
+    public List<Task> history() {
+        return managerHistory.getHistory();
     }
 }
