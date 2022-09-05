@@ -36,11 +36,11 @@ public class Main {
 
         // добавляем задачи в менеджер
         System.out.println("добавляем задачи в менеджер!");
-        manager.addSET(subTask1);
-        manager.addSET(subTask2);
-        manager.addSET(subTask3);
-        manager.addET(epic11);
-        manager.addET(epic22);
+        manager.addSubEpicTask(subTask1);
+        manager.addSubEpicTask(subTask2);
+        manager.addSubEpicTask(subTask3);
+        manager.addEpicTask(epic11);
+        manager.addEpicTask(epic22);
 
         // печать списка эпика и подзадач
         System.out.println("печать списка эпика и подзадач!");

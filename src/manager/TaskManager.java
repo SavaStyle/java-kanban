@@ -33,11 +33,11 @@ public interface TaskManager {
     SubTask getSubTaskById(int id);
 
     // создание задач
-    void addST(SimpleTask task);
+    void addSimpleTask(SimpleTask task);
 
-    void addET(Epic task);
+    void addEpicTask(Epic task);
 
-    void addSET(SubTask task);
+    void addSubEpicTask(SubTask task);
 
     // обновление задач
     void updateSimpleTask(SimpleTask task);

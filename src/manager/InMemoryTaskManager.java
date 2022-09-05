@@ -78,17 +78,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     // создание задач
     @Override
-    public void addST(SimpleTask task) {
+    public void addSimpleTask(SimpleTask task) {
         simpleTasks.put(task.getId(), task);
     }
 
     @Override
-    public void addET(Epic task) {
+    public void addEpicTask(Epic task) {
         epicks.put(task.getId(), task);
     }
 
     @Override
-    public void addSET(SubTask task) {
+    public void addSubEpicTask(SubTask task) {
         subTasks.put(task.getId(), task);
     }
 
