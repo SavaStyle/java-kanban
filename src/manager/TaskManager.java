@@ -3,7 +3,9 @@ package manager;
 import tasks.Epic;
 import tasks.SimpleTask;
 import tasks.SubTask;
+import tasks.Task;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -58,4 +60,12 @@ public interface TaskManager {
 
     // обновление статуса эпика
     void updateEpicStatus(Epic task);
+
+    List<Task> history();
+
+    Collection<SimpleTask> getSimpleTasks();
+
+    Collection<Epic> getEpicTasks();
+
+    Collection<SubTask> getSubTask();
 }

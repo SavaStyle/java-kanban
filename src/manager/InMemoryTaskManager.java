@@ -2,17 +2,18 @@ package manager;
 
 import tasks.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, SimpleTask> simpleTasks = new HashMap<>();
-    private final Map<Integer, SubTask> subTasks = new HashMap<>();
-    private final Map<Integer, Epic> epicks = new HashMap<>();
-    private final HistoryManager managerHistory = Managers.getDefaultHistory();
+    protected final Map<Integer, SimpleTask> simpleTasks = new HashMap<>();
+    protected final Map<Integer, SubTask> subTasks = new HashMap<>();
+    protected final Map<Integer, Epic> epicks = new HashMap<>();
+    protected static final HistoryManager managerHistory = Managers.getDefaultHistory();
 
-    private int nextId = 1;
+    protected static int nextId = 1;
 
     @Override
     public int getNextId() {
@@ -179,4 +180,17 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> history() {
         return managerHistory.getHistory();
     }
+
+    public Collection<SimpleTask> getSimpleTasks() {
+        return simpleTasks.values();
+    }
+
+    public Collection<Epic> getEpicTasks() {
+        return epicks.values();
+    }
+
+    public Collection<SubTask> getSubTask() {
+        return subTasks.values();
+    }
+
 }
