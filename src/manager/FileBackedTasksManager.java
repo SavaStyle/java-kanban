@@ -1,9 +1,7 @@
 package manager;
 
-import tasks.Epic;
-import tasks.SimpleTask;
-import tasks.SubTask;
-import tasks.Task;
+import tasks.*;
+import Exception.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,12 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
-    public File file;
+    private File file;
 
     public FileBackedTasksManager() {
     }
@@ -98,7 +95,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     // сохранение таскМенеджера
     public void save() {
         StringBuilder sb = new StringBuilder();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("save.csv", StandardCharsets.UTF_8))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\Save\\save.csv", StandardCharsets.UTF_8))) {
             // записать в файл заголовок
             writer.write(TaskManagerCSVFormat.getHeader());
             writer.write(TaskManagerCSVFormat.taskToString(this));
@@ -109,22 +106,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка сохраненя");
         }
-    }
-
-    @Override
-    public Map<Integer, SimpleTask> printSimpleTask() {
-        return super.printSimpleTask();
-    }
-
-    @Override
-    public Map<Integer, Epic> printEpicTask() {
-        return super.printEpicTask();
-
-    }
-
-    @Override
-    public Map<Integer, SubTask> printSubTasks() {
-        return super.printSubTasks();
     }
 
     @Override
@@ -204,8 +185,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public void deleteSimpleTaskById(int id) {
-        super.deleteSimpleTaskById(id);
-        save();
+       super.deleteSimpleTaskById(id);
+       save();
     }
 
     @Override
@@ -221,19 +202,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public List<Integer> getListSubTasks(int id) {
-        return super.getListSubTasks(id);
-    }
-
-    @Override
     public void updateEpicStatus(Epic task) {
         super.updateEpicStatus(task);
         save();
-    }
-
-    @Override
-    public List<Task> history() {
-        return super.history();
     }
 
     public static void updateNextID(Integer id) {

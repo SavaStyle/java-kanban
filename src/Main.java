@@ -49,9 +49,9 @@ public class Main {
         manager.addSimpleTask(simpleTask2);
 
         System.out.println("печать списка эпика и подзадач!");
-        manager.printSubTasks();
-        manager.printEpicTask();
-        manager.printSimpleTask();
+        manager.getSubTasks();
+        manager.getEpicTask();
+        manager.getSimpleTask();
 
         System.out.println("заполняем лист истории просмотра");
         manager.getSubTaskById(5);
@@ -70,13 +70,13 @@ public class Main {
 
         System.out.println("загрузка");
 
-        manager = FileBackedTasksManager.loadFromFile(Path.of("save.csv"));
+        manager = FileBackedTasksManager.loadFromFile(Path.of("src\\Save\\save.csv"));
 
         System.out.println("печать");
         System.out.println(manager.history());
-        manager.printSubTasks();
-        manager.printEpicTask();
-        manager.printSimpleTask();
+        manager.getSubTasks();
+        manager.getEpicTask();
+        manager.getSimpleTask();
 
         System.out.println("getNextId");
         System.out.println(manager.getNextId());

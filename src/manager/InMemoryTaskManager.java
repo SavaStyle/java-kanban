@@ -22,19 +22,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     // Получение списка всех задач
     @Override
-    public Map<Integer, SimpleTask> printSimpleTask() {
+    public Map<Integer, SimpleTask> getSimpleTask() {
         System.out.println(simpleTasks);
         return simpleTasks;
     }
 
     @Override
-    public Map<Integer, Epic> printEpicTask() {
+    public Map<Integer, Epic> getEpicTask() {
         System.out.println(epicks);
         return epicks;
     }
 
     @Override
-    public Map<Integer, SubTask> printSubTasks() {
+    public Map<Integer, SubTask> getSubTasks() {
         System.out.println(subTasks);
         return subTasks;
     }
