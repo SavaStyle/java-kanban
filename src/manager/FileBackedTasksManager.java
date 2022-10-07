@@ -11,17 +11,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private File file;
 
-    public FileBackedTasksManager() {
-    }
 
-    public FileBackedTasksManager(File file) {
-        this.file = file;
+    public FileBackedTasksManager() {
     }
 
     static Map<Integer, Task> historyMap = new HashMap<>();
@@ -34,6 +32,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         //считывание файла
         try {
             String file = Files.readString(path);
+            if (file.equals("")) {
+                return tasksManager;
+            }
             String[] lines = file.split(System.lineSeparator());
 
             // разбивка тасков
@@ -52,18 +53,23 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 String type = types[1];
                 tasksManager.addTask(task, type);
             }
-
+                // восстановление истории
             String historyLine = lines[lines.length - 1];
-            String[] historyString = historyLine.split(",");
-
-
-            for (int j = 0; j < historyString.length; j++) {
-                int taskID = Integer.parseInt(historyString[j]);
-                Task taskHistory = historyMap.get(taskID);
-                managerHistory.add(taskHistory);
+            if (!(historyLine.equals("История просмотров пуста"))) {
+                String[] historyString = historyLine.split(",");
+                for (int j = 0; j < historyString.length; j++) {
+                    int taskID = Integer.parseInt(historyString[j]);
+                    Task taskHistory = historyMap.get(taskID);
+                    managerHistory.add(taskHistory);
             }
-
+            }
             updateNextID(generatorID);
+
+            // восстановление времени начала и окончания эпиков
+            for (Map.Entry<Integer, SubTask> entry : tasksManager.subTasks.entrySet()) {
+                SubTask subTask = entry.getValue();
+                tasksManager.updateEpicTimeBySubTask(subTask);
+            }
 
         } catch (IOException err) {
             throw new ManagerSaveException("Ошибка при восстановлении данных");
@@ -81,11 +87,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
             case SIMPLETASK: {
                 simpleTasks.put(task.getId(), (SimpleTask) task);
+                prioritizedTasks.add(task);
                 historyMap.put(task.getId(), task);
                 break;
             }
             case SUBTASK: {
                 subTasks.put(task.getId(), (SubTask) task);
+                prioritizedTasks.add(task);
                 historyMap.put(task.getId(), task);
 
             }
@@ -94,15 +102,23 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     // сохранение таскМенеджера
     public void save() {
+        InMemoryHistoryManager managerHistory = Managers.getDefaultHistory();
         StringBuilder sb = new StringBuilder();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\Save\\save.csv", StandardCharsets.UTF_8))) {
             // записать в файл заголовок
             writer.write(TaskManagerCSVFormat.getHeader());
             writer.write(TaskManagerCSVFormat.taskToString(this));
-            for (Task task : history()) {
-                sb.append(task.getId() + ",");
+            //сохранение истории
+            Map<Integer, Node> NodeMap = managerHistory.getNodeMap();
+            List<Task> ist = history();
+            if (!(ist.isEmpty())) {
+                for (Task task : history()) {
+                    sb.append(task.getId() + ",");
+                }
+                writer.write(System.lineSeparator() + sb.toString());
+            } else {
+                writer.write(System.lineSeparator() + "История просмотров пуста");
             }
-            writer.write(System.lineSeparator() + sb.toString());
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка сохраненя");
         }
@@ -209,6 +225,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static void updateNextID(Integer id) {
         nextId = id + 1;
+    }
+
+    @Override
+    public void updateEpicTime(Epic task) {
+        super.updateEpicTime(task);
     }
 }
 

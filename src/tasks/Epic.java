@@ -1,5 +1,10 @@
 package tasks;
 
+import manager.Managers;
+import manager.TaskManager;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,32 +20,27 @@ public class Epic extends Task {
         super(id, name, description, status);
     }
 
-    public void addSubTask(int subTaskId) {
-        subTaskIds.add(subTaskId);
+    public Epic(int id, String name, String description, Status status, LocalDateTime startTime, Duration duration, LocalDateTime endTime) {
+        super(id, name, description, status);
+        this.startTime = null;
+        this.duration = null;
+        this.endTime = null;
     }
 
-    public void setSubTaskIds(ArrayList<Integer> subTaskIds) {
-        this.subTaskIds = subTaskIds;
-    }
 
     public List<Integer> getSubTaskId() {
         return subTaskIds;
     }
 
-    public void setSubTaskId(ArrayList<Integer> subTaskId) {
-        this.subTaskIds = subTaskId;
-    }
-
-    public List<Integer> getSubTaskIds() {
-        return subTaskIds;
-    }
-
     @Override
     public String toString() {
-        return id + "," +
+         return id + "," +
                 TasksType.EPIC + "," +
                 name + "," +
                 status + "," +
-                description;
+                description + "," +
+                startTime + "," +
+                duration ;
     }
+
 }

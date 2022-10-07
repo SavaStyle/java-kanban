@@ -5,9 +5,7 @@ import tasks.SimpleTask;
 import tasks.SubTask;
 import tasks.Task;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface TaskManager {
 
@@ -55,9 +53,6 @@ public interface TaskManager {
 
     void deleteEpicById(int id);
 
-    // Получение списка подзадач эпика
-    List<Integer> getListSubTasks(int id);
-
     // обновление статуса эпика
     void updateEpicStatus(Epic task);
 
@@ -68,4 +63,12 @@ public interface TaskManager {
     Collection<Epic> getEpicTasks();
 
     Collection<SubTask> getSubTask();
+
+    void updateEpicTime(Epic epic);
+
+    void updateEpicTimeBySubTask(SubTask task);
+
+     Set<Task> getPrioritizedTasks();
+
+     void crossCheckAdd(Task task);
 }

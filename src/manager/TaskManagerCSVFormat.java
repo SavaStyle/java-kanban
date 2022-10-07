@@ -2,13 +2,15 @@ package manager;
 
 import tasks.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskManagerCSVFormat {
 
     public static String getHeader() {
-        return "id,type,name,status,description,epic" + System.lineSeparator();
+        return "id,type,name,status,description,startTime,duration,epic" + System.lineSeparator();
     }
 
     public static Task fromString(String line) {
@@ -19,8 +21,17 @@ public class TaskManagerCSVFormat {
         Status status = Status.valueOf(lines[3]);
         String description = lines[4];
         Integer epicId = null;
-        if (lines.length == 6) {
-            epicId = Integer.parseInt(lines[5]);
+        LocalDateTime startTime = null;
+        Duration duration = null;
+       // LocalDateTime endTime = null;
+        if (!(lines[5].equals("null"))) {
+            startTime = LocalDateTime.parse(lines[5]);
+        }
+        if (!(lines[6].equals("null"))) {
+            duration = Duration.parse(lines[6]);
+        }
+        if (lines.length == 8) {
+            epicId = Integer.parseInt(lines[7]);
         }
 
         switch (TasksType.valueOf(TaskType)) {
@@ -28,10 +39,10 @@ public class TaskManagerCSVFormat {
                 return new Epic(id, name, description, status);
             }
             case SIMPLETASK: {
-                return new SimpleTask(id, name, description, status);
+                return new SimpleTask(id, name, description, status, startTime, duration);
             }
             case SUBTASK: {
-                return new SubTask(id, name, description, status, epicId);
+                return new SubTask(id, name, description, status, startTime, duration, epicId);
             }
         }
         return null;

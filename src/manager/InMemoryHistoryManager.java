@@ -77,4 +77,19 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return history;
     }
+
+    public Map<Integer, Node> getNodeMap() {
+        return nodeMap;
+    }
+
+
+    public Node getLast() {
+        return last;
+    }
+
+    public void historyClear() {
+        last = null;
+        first = null;
+        nodeMap.clear();
+    }
 }
