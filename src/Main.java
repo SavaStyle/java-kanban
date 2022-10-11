@@ -7,11 +7,9 @@ import tasks.Status;
 import tasks.SubTask;
 
 import java.nio.file.Path;
-import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -23,7 +21,7 @@ public class Main {
         testCreation(manager);
     }
 
-    public static void testCreation(TaskManager manager)  {
+    public static void testCreation(TaskManager manager) {
 
         System.out.println("создаем эпик и добавляем в него подзадачи!");
 
@@ -42,14 +40,11 @@ public class Main {
         epic1.add(subTask2.getId());
         epic1.add(subTask3.getId());
         SimpleTask simpleTask1 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask1", "simpleTask1", Status.IN_PROGRESS,
-               LocalDateTime.of(5, 1, 1, 6, 0), Duration.ofMinutes(90));
+                LocalDateTime.of(5, 1, 1, 6, 0), Duration.ofMinutes(90));
         SimpleTask simpleTask2 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask2", "simpleTask2", Status.NEW,
-               LocalDateTime.of(2000, 1, 1, 8, 0), Duration.ofMinutes(90));
+                LocalDateTime.of(2000, 1, 1, 8, 0), Duration.ofMinutes(90));
 
-
-
-      //   Epic testEpic = new Epic(manager.getNextId(), "testEpic", "описание теста ID8", Status.NEW);
-
+        //   Epic testEpic = new Epic(manager.getNextId(), "testEpic", "описание теста ID8", Status.NEW);
 
         System.out.println("добавляем задачи в менеджер!");
         manager.addSubEpicTask(subTask1);
@@ -59,22 +54,21 @@ public class Main {
         manager.addEpicTask(epic22);
         manager.addSimpleTask(simpleTask1);
         manager.addSimpleTask(simpleTask2);
-      //  manager.addEpicTask(testEpic);
+        //  manager.addEpicTask(testEpic);
 
         System.out.println("test 8 'эпика");
-    //   System.out.println(testEpic.getSubTaskId());
-     //    System.out.println(manager.getEpicById(8));
+        //   System.out.println(testEpic.getSubTaskId());
+        //    System.out.println(manager.getEpicById(8));
 
         System.out.println("печать списка эпика и подзадач!");
         manager.getSubTasks();
         manager.getEpicTask();
         manager.getSimpleTask();
 
-
         System.out.println("crossCheck");
         manager.crossCheckAdd(new SimpleTask(manager.getNextId(), "TestTask", "simpleTask2", Status.NEW,
                 LocalDateTime.of(2000, 1, 1, 7, 45), Duration.ofMinutes(10)));
-/*
+
         System.out.println("заполняем историю просмотра");
         manager.getSubTaskById(5);
         manager.getSubTaskById(4);
@@ -84,11 +78,10 @@ public class Main {
         manager.getSubTaskById(3);
         manager.getSimpleTaskById(7);
         manager.getSimpleTaskById(6);
-*/
+
         System.out.println("Печать приоретезированного списка");
         System.out.println(manager.getPrioritizedTasks());
         manager.getSimpleTask();
-
 
         System.out.println("история");
         System.out.println(manager.history());
@@ -105,7 +98,7 @@ public class Main {
 
         System.out.println("загрузка");
 
-        manager = FileBackedTasksManager.loadFromFile(Path.of("src\\Save\\save.csv"));
+        manager = FileBackedTasksManager.loadFromFile(Path.of("save\\save.csv"));
 
         System.out.println("печать истории");
         System.out.println(manager.history());
@@ -120,14 +113,11 @@ public class Main {
         System.out.println("Печать приоретезированного списка");
         System.out.println(manager.getPrioritizedTasks());
 
-       ArrayList<Integer> testList = new ArrayList<>();
+        ArrayList<Integer> testList = new ArrayList<>();
 
         SubTask testSubTask = new SubTask(manager.getNextId(), "testSubTask", "testSubTask", Status.NEW,
                 LocalDateTime.of(2000, 1, 1, 0, 0), Duration.ofMinutes(30), 8);
         testList.add(testSubTask.getId());
-
-     //   System.out.println(manager.getEpicById(8));
-
     }
 }
 

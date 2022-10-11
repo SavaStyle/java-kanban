@@ -102,9 +102,17 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     // сохранение таскМенеджера
     public void save() {
+        if (!(Files.exists(Path.of("save\\save.csv")))) {
+            try {
+                Files.createDirectory(Path.of("save"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         InMemoryHistoryManager managerHistory = Managers.getDefaultHistory();
         StringBuilder sb = new StringBuilder();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\Save\\save.csv", StandardCharsets.UTF_8))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("save\\save.csv", StandardCharsets.UTF_8))) {
             // записать в файл заголовок
             writer.write(TaskManagerCSVFormat.getHeader());
             writer.write(TaskManagerCSVFormat.taskToString(this));
@@ -120,7 +128,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 writer.write(System.lineSeparator() + "История просмотров пуста");
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка сохраненя");
+            throw new ManagerSaveException("Ошибка сохранюня");
         }
     }
 
