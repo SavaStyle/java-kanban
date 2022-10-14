@@ -8,7 +8,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class EpicTest {
     TaskManager manager = Managers.getDefault();
@@ -28,16 +29,16 @@ class EpicTest {
     void testToString() {
         ArrayList<Integer> epic2 = new ArrayList<>();
         Epic epic22 = new Epic(manager.getNextId(), "NAMEepic2", "epic2", Status.NEW, epic2);
-        String string = epic22.getId() + ",EPIC,NAMEepic2,NEW,epic2,null,null" ;
+        String string = epic22.getId() + ",EPIC,NAMEepic2,NEW,epic2,null,null";
 
-        assertEquals(string,  epic22.toString());
+        assertEquals(string, epic22.toString());
     }
 
     @Test
     void withOutSubtasks() {
         Epic epic11 = new Epic(manager.getNextId(), "NAMEepic1", "epic1", Status.NEW);
 
-        assertEquals(null, epic11.getSubTaskId());
+        assertNull(epic11.getSubTaskId());
     }
 
     @Test
