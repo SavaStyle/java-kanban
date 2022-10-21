@@ -18,8 +18,6 @@ import static KVServer.HttpTaskServer.getGson;
 public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println("Поехали!");
-        Gson gson = getGson();
         KVServer kvs = new KVServer();
         kvs.start();
         TaskManager manager = Managers.getDefault();
@@ -43,11 +41,6 @@ public class Main {
                 LocalDateTime.of(5, 1, 1, 6, 0), Duration.ofMinutes(90));
         SimpleTask simpleTask2 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask2", "simpleTask2", Status.NEW,
                 LocalDateTime.of(2000, 1, 1, 8, 0), Duration.ofMinutes(90));
-
-        manager.addSimpleTask(simpleTask1);
-        manager.addSimpleTask(simpleTask2);
-        String string = gson.toJson(manager.getSimpleTask());
-        System.out.println(string);
 
         System.out.println("добавляем задачи в менеджер!");
         manager.addSubEpicTask(subTask1);
