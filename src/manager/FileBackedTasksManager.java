@@ -1,7 +1,10 @@
 package manager;
 
-import tasks.*;
-import Exception.*;
+import Exception.ManagerSaveException;
+import tasks.Epic;
+import tasks.SimpleTask;
+import tasks.SubTask;
+import tasks.Task;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +21,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private File file;
 
-
     public FileBackedTasksManager() {
     }
 
@@ -28,6 +30,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public static FileBackedTasksManager loadFromFile(Path path) {
 
         FileBackedTasksManager tasksManager = new FileBackedTasksManager();
+        HistoryManager managerHistory = Managers.getDefaultHistory();
 
         //считывание файла
         try {
@@ -53,7 +56,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 String type = types[1];
                 tasksManager.addTask(task, type);
             }
-                // восстановление истории
+            // восстановление истории
             String historyLine = lines[lines.length - 1];
             if (!(historyLine.equals("История просмотров пуста"))) {
                 String[] historyString = historyLine.split(",");
@@ -61,7 +64,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     int taskID = Integer.parseInt(historyString[j]);
                     Task taskHistory = historyMap.get(taskID);
                     managerHistory.add(taskHistory);
-            }
+                }
             }
             updateNextID(generatorID);
 
@@ -117,13 +120,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             writer.write(TaskManagerCSVFormat.getHeader());
             writer.write(TaskManagerCSVFormat.taskToString(this));
             //сохранение истории
-            Map<Integer, Node> NodeMap = managerHistory.getNodeMap();
             List<Task> ist = history();
             if (!(ist.isEmpty())) {
                 for (Task task : history()) {
                     sb.append(task.getId() + ",");
                 }
-                writer.write(System.lineSeparator() + sb.toString());
+                writer.write(System.lineSeparator() + sb);
             } else {
                 writer.write(System.lineSeparator() + "История просмотров пуста");
             }
@@ -209,8 +211,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public void deleteSimpleTaskById(int id) {
-       super.deleteSimpleTaskById(id);
-       save();
+        super.deleteSimpleTaskById(id);
+        save();
     }
 
     @Override

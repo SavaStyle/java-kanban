@@ -22,6 +22,9 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     TaskManager manager = Managers.getDefault();
     InMemoryHistoryManager managerHistory = Managers.getDefaultHistory();
 
+    FileBackedTasksManagerTest() throws IOException, InterruptedException {
+    }
+
 
     @BeforeEach
     void clean() {

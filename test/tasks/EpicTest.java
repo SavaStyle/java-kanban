@@ -4,6 +4,7 @@ import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class EpicTest {
     TaskManager manager = Managers.getDefault();
+
+    EpicTest() throws IOException, InterruptedException {
+    }
 
     @Test
     void getSubTaskId() {

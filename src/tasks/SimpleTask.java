@@ -9,6 +9,10 @@ public class SimpleTask extends Task {
         super(id, name, description, status);
     }
 
+    public SimpleTask() {
+        super(null);
+    }
+
     public SimpleTask(int id, String name, String description, Status status, LocalDateTime startTime, Duration duration) {
         super(id, name, description, status, startTime, duration);
     }
@@ -20,7 +24,7 @@ public class SimpleTask extends Task {
                 name + "," +
                 status + "," +
                 description + "," +
-                startTime+ "," +
-                duration ;
+                startTime + "," +
+                duration;
     }
 }

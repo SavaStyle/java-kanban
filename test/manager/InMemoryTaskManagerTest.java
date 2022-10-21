@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import tasks.*;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -16,6 +17,9 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
 
     TaskManager manager = Managers.getDefault();
     InMemoryHistoryManager managerHistory = Managers.getDefaultHistory();
+
+    InMemoryTaskManagerTest() throws IOException, InterruptedException {
+    }
 
     @AfterEach
     void clean() {

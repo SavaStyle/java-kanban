@@ -5,7 +5,10 @@ import tasks.SimpleTask;
 import tasks.SubTask;
 import tasks.Task;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -68,7 +71,7 @@ public interface TaskManager {
 
     void updateEpicTimeBySubTask(SubTask task);
 
-     Set<Task> getPrioritizedTasks();
+    Set<Task> getPrioritizedTasks();
 
-     void crossCheckAdd(Task task);
+    void crossCheckAdd(Task task);
 }

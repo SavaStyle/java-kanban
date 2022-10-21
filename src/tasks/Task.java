@@ -2,7 +2,6 @@ package tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static tasks.TasksType.*;
 
@@ -25,13 +24,16 @@ public abstract class Task implements Comparable<Task> {
         this.status = status;
     }
 
-    public Task(int id,String name,String description, Status status, LocalDateTime startTime, Duration duration){
+    public Task(int id, String name, String description, Status status, LocalDateTime startTime, Duration duration) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
         this.startTime = startTime;
         this.duration = duration;
+    }
+
+    public Task(Object o) {
     }
 
     public static TasksType getType(Task task, String type) {
@@ -54,13 +56,13 @@ public abstract class Task implements Comparable<Task> {
     public String toString() {
         return
                 "id=" + id +
-                ", type='" + name + '\'' +
-                ", name='" + description + '\'' +
-                ", status=" + status +
-                ", startTime=" + startTime +
-                ", duration=" + duration +
-                ", EndTime=" + endTime +
-                '}';
+                        ", type='" + name + '\'' +
+                        ", name='" + description + '\'' +
+                        ", status=" + status +
+                        ", startTime=" + startTime +
+                        ", duration=" + duration +
+                        ", EndTime=" + endTime +
+                        '}';
     }
 
     public Status getStatus() {
@@ -121,7 +123,7 @@ public abstract class Task implements Comparable<Task> {
         } else {
             endTime = null;
         }
-         return endTime;
+        return endTime;
     }
 
     @Override

@@ -7,6 +7,7 @@ import tasks.SimpleTask;
 import tasks.Status;
 import tasks.Task;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -17,6 +18,9 @@ class InMemoryHistoryManagerTest {
 
     TaskManager manager = Managers.getDefault();
     InMemoryHistoryManager managerHistory = Managers.getDefaultHistory();
+
+    InMemoryHistoryManagerTest() throws IOException, InterruptedException {
+    }
 
     @AfterEach
     void clean() {
