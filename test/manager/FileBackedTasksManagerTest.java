@@ -22,6 +22,7 @@ class FileBackedTasksManagerTest extends InMemoryTaskManagerTest {
     @BeforeEach
     public void beforeEach() throws IOException {
         manager = new FileBackedTasksManager();
+        managerHistory = new InMemoryHistoryManager();
     }
 
     @Test

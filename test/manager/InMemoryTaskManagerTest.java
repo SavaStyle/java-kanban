@@ -9,5 +9,6 @@ public class InMemoryTaskManagerTest extends TaskManagerTest {
     @BeforeEach
     public void beforeEach() throws IOException {
         manager = new InMemoryTaskManager();
+        managerHistory = new InMemoryHistoryManager();
     }
 }

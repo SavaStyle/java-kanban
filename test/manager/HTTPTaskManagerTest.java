@@ -1,74 +1,91 @@
-package KVServer;
+package manager;
 
-import manager.Managers;
-import manager.TaskManager;
+import KVServer.KVServer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import tasks.Epic;
 import tasks.SimpleTask;
 import tasks.Status;
 import tasks.SubTask;
+import KVServer.HttpTaskServer;
 
 import java.io.IOException;
+import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HttpTaskServerTest {
-    static KVServer kvs;
-    static TaskManager manager;
-    static HttpTaskServer server;
-    static  SimpleTask simpleTask555;
-    static  Epic epic555;
-    static  SimpleTask simpleTask666;
-    static  SubTask subTask222;
-    static  Epic epic666;
-    static  SubTask subTask1111;
+class HTTPTaskManagerTest  extends FileBackedTasksManagerTest {
+
+     KVServer kvs;
+     TaskManager manager;
+     HttpTaskServer server;
+      SimpleTask simpleTask555;
+      Epic epic555;
+      SimpleTask simpleTask666;
+      SubTask subTask222;
+      Epic epic666;
+      SubTask subTask1111;
 
 
-    @BeforeAll
-    static void  start() throws IOException, InterruptedException {
+    @BeforeEach
+     void  start() throws IOException, InterruptedException {
         kvs = new KVServer();
         kvs.start();
-        manager = Managers.getDefault();
+        manager = new HTTPTaskManager(URI.create("http://localhost:8078"));
         server = new HttpTaskServer(manager);
         server.start();
+
         ArrayList<Integer> epic1 = new ArrayList<>();
         epic555 = new Epic(manager.getNextId(), "NAMEepic1", "epic1", Status.NEW, epic1);
         ArrayList<Integer> epic2 = new ArrayList<>();
         epic666 = new Epic(manager.getNextId(), "NAMEepic2", "epic2", Status.NEW, epic2);
         subTask1111 = new SubTask(manager.getNextId(), "NAMEsubtask1", "subtask1", Status.DONE,
-                LocalDateTime.of(2000, 1, 1, 0, 0), Duration.ofMinutes(90), 1);
+                LocalDateTime.of(2000, 1, 1, 0, 0), Duration.ofMinutes(90), epic555.getId());
         subTask222 = new SubTask(manager.getNextId(), "NAMEsubtask2", "subtask2", Status.DONE,
-                LocalDateTime.of(2001, 1, 1, 2, 0), Duration.ofMinutes(90), 1);
-        SubTask subTask3 = new SubTask(manager.getNextId(), "NAMEsubtask3", "subtask3", Status.DONE,
-                LocalDateTime.of(2005, 1, 1, 4, 0), Duration.ofMinutes(90), 1);
+                LocalDateTime.of(2001, 1, 1, 2, 0), Duration.ofMinutes(90), epic555.getId());
+        SubTask subTask321 = new SubTask(manager.getNextId(), "NAMEsubtask3", "subtask3", Status.DONE,
+                LocalDateTime.of(2005, 1, 1, 4, 0), Duration.ofMinutes(90), epic555.getId());
         epic1.add(subTask1111.getId());
         epic1.add(subTask222.getId());
-        epic1.add(subTask3.getId());
-         simpleTask555 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask1", "simpleTask1", Status.IN_PROGRESS,
+        epic1.add(subTask321.getId());
+        simpleTask555 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask1", "simpleTask1", Status.IN_PROGRESS,
                 LocalDateTime.of(5, 1, 1, 6, 0), Duration.ofMinutes(90));
-         simpleTask666 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask2", "simpleTask2", Status.NEW,
+        simpleTask666 = new SimpleTask(manager.getNextId(), "NAMEsimpleTask2", "simpleTask2", Status.NEW,
                 LocalDateTime.of(2000, 1, 1, 8, 0), Duration.ofMinutes(90));
         manager.addSubEpicTask(subTask1111);
         manager.addSubEpicTask(subTask222);
-        manager.addSubEpicTask(subTask3);
+        manager.addSubEpicTask(subTask321);
         manager.addEpicTask(epic555);
         manager.addEpicTask(epic666);
         manager.addSimpleTask(simpleTask555);
         manager.addSimpleTask(simpleTask666);
-        manager.getSubTaskById(5);
-        manager.getSubTaskById(4);
-        manager.getSubTaskById(3);
-        manager.getEpicById(1);
-        manager.getEpicById(2);
-        manager.getSubTaskById(3);
-        manager.getSimpleTaskById(7);
-        manager.getSimpleTaskById(6);
+        manager.getSubTaskById(subTask1111.getId());
+        manager.getSubTaskById(subTask222.getId());
+        manager.getSubTaskById(subTask321.getId());
+        manager.getEpicById(epic555.getId());
+        manager.getEpicById(epic666.getId());
+        manager.getSubTaskById(subTask1111.getId());
+        manager.getSimpleTaskById(simpleTask555.getId());
+        manager.getSimpleTaskById(simpleTask666.getId());
+    }
+
+    @AfterEach
+    public void afterEach() {
+        manager.cleanSubTask();
+        manager.cleanEpicTask();
+        manager.cleanSubTask();
+        managerHistory.historyClear();
+
+        kvs.stop();
+        server.stop();
     }
 
     @Test
@@ -81,9 +98,9 @@ class HttpTaskServerTest {
 
     @Test
     void getTasksById() throws IOException, InterruptedException {
-        assertEquals(simpleTask555, manager.getSimpleTaskById(6)); // проверка  SimpleTaskById
-        assertEquals(epic555, manager.getEpicById(1)); // проверка  EpicById
-        assertEquals(subTask1111, manager.getSubTaskById(3)); // проверка  SubTaskById
+        assertEquals(simpleTask555, manager.getSimpleTaskById(simpleTask555.getId())); // проверка  SimpleTaskById
+        assertEquals(epic555, manager.getEpicById(epic555.getId())); // проверка  EpicById
+        assertEquals(subTask1111, manager.getSubTaskById(subTask1111.getId())); // проверка  SubTaskById
     }
 
     @Test

@@ -14,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 abstract class TaskManagerTest {
 
     protected TaskManager manager;
-    protected InMemoryHistoryManager managerHistory = new InMemoryHistoryManager();
+    protected InMemoryHistoryManager managerHistory;
+/*
 
     @AfterEach
     void clean() {
@@ -23,6 +24,7 @@ abstract class TaskManagerTest {
         manager.cleanSubTask();
         managerHistory.historyClear();
     }
+*/
 
     @Test
     void getNextId() {
