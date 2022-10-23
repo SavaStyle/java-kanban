@@ -1,8 +1,8 @@
 package KVServer;
 
-import Adapters.EpicAdapter;
-import Adapters.SimpleTaskAdapter;
-import Adapters.SubTaskAdapter;
+import adapters.EpicAdapter;
+import adapters.SimpleTaskAdapter;
+import adapters.SubTaskAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
@@ -22,8 +22,8 @@ public class HttpTaskServer {
 
     public static final int PORT = 8080;
 
-    TaskManager manager;
-    Gson gson = getGson();
+    private final TaskManager manager;
+    private final Gson gson = getGson();
 
     public static Gson getGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
